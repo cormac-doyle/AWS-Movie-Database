@@ -35,90 +35,10 @@ AWS.config.update({
 let dynamodb = new AWS.DynamoDB();
 let s3 = new AWS.S3();
 
-/*
-function loadData(){
-    // Fetch S3 data
-    return new Promise((resolve, reject)=>{
-
-        const s3 = new AWS.S3();
-        //let bucketData = null;
-        s3.getObject(
-            { Bucket: "csu44000assign2useast20", Key: "moviedata.json" },
-            function (error, data) {
-              if (error != null) {
-                console.log("Failed to retrieve an object: " + error);
-                return res.status(400).json(err)
-              } else {
-                console.log("Loaded " + data.ContentLength + " bytes");
-                //bucketData = data.Body.toString('utf-8');
-                let jsonData = JSON.parse(data.Body);
-                console.log("bucket data is loaded")
-                resolve(jsonData);
-                //res.json(bucketData)
-              }
-            }
-          );
-
-    })
-    
-}
-
-
-
-async function importData(){
-
-    //wait for all data to be loaded from loadData function
-    const response = await loadData() //response of loadData is the bucketData info
-    
-    
-
-    console.log("bucket data loaded, ready to import")
-
-    //console.log("Response: "+ JSON.stringify(response))
-
-
-    //import response
-    var docClient = new AWS.DynamoDB.DocumentClient();
-
-    console.log("Importing movies into DynamoDB. Please wait.");
-
-    //var allMovies = JSON.parse(fs.readFileSync('moviedata.json', 'utf8'));
-
-    response.forEach(function(movie) {
-
-        var params = {
-            TableName: "Movies",
-            Item: {
-                "year":  movie.year,
-                "title": movie.title,
-                "info":  movie.info
-            }
-        };
-
-        docClient.put(params, function(err, data) {
-        if (err) {
-            //console.error("Unable to add movie", movie.title, ". Error JSON:", JSON.stringify(err, null, 2));
-        } else {
-            //console.log("PutItem succeeded:", movie.title);
-        }
-        });
-        
-    });
-
-    //console.log("Importing finished");
-    
-}
-*/
 
 
 
 
-
-
-const bucket_params = {
-    Bucket: "csu44000assignment220",
-    Key: "moviedata.json",
-}
 
 async function CreateDestroyDB (req, res){
     console.log("createDestroyDB called");

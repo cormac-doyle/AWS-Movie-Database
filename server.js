@@ -85,7 +85,7 @@ function CreateDestroyDB (req, res){
         });
 
        
-        //await sleep(5000); // wait 5 seconds so table can be created
+        wait(5000); // wait 5 seconds so table can be created
         console.log("Table created.");
         console.log("Loading Data. Please Wait...");
 
@@ -229,10 +229,10 @@ function queryDB(req, res){
 
 }
 
-/*
-function sleep(ms) {
-    return new Promise((resolve) => {
-      setTimeout(resolve, ms);
-    });
-}
-*/
+function wait(ms){
+    var start = new Date().getTime();
+    var end = start;
+    while(end < start + ms) {
+      end = new Date().getTime();
+   }
+ }

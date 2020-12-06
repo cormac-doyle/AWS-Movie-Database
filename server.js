@@ -19,9 +19,6 @@ app.get('/', (req, res) => {
 })
 
 
-
-
-
 app.use(express.static('public')); // serves html page 
 
 
@@ -36,11 +33,7 @@ let dynamodb = new AWS.DynamoDB();
 let s3 = new AWS.S3();
 
 
-
-
-
-
-function CreateDestroyDB (req, res){
+function CreateDestroyDB (req, res){ //creates OR destroys database
     console.log("createDestroyDB called");
 
 
@@ -57,6 +50,8 @@ function CreateDestroyDB (req, res){
     //if bool fasle: delete DB
     if(create_bool == 'true'){
         console.log("Creating Table. Please Wait...")
+
+        //table parameters
         var params = {
             TableName : "Movies",
             KeySchema: [       
@@ -92,14 +87,15 @@ function CreateDestroyDB (req, res){
         const s3 = new AWS.S3();
         //let bucketData = null;
         
-        s3.getObject(
+        s3.getObject( //get bucket data
             { Bucket: "csu44000assign2useast20", Key: "moviedata.json" },
             function (error, data) {
               if (error != null) {
                 console.log("Failed to retrieve an object: " + error);
                 return res.status(400).json(err)
               } else {
-                //console.log("Loaded " + data.ContentLength + " bytes");
+               
+
                 //bucketData = data.Body.toString('utf-8');
                 let bucketData = JSON.parse(data.Body);
                 //console.log(jsonData)
@@ -109,6 +105,7 @@ function CreateDestroyDB (req, res){
 
                 console.log("Importing data into DynamoDB. Please wait...");
 
+                //import data into dynamo DB table
                 //var allMovies = JSON.parse(fs.readFileSync('moviedata.json', 'utf8'));
                 bucketData.forEach(function(movie) {
                     var params = {
@@ -178,6 +175,7 @@ function queryDB(req, res){
     var table = "Movies";
 
 
+    //query params
     var params = {
         TableName : "Movies",
         KeyConditionExpression: "#yr = :yyyy and begins_with(title, :t)",
@@ -191,7 +189,7 @@ function queryDB(req, res){
     };
 
 
-    
+    //query database with parameters
     docClient.query(params, function(err, data) {
         if (err) {
             console.log(err)
@@ -201,7 +199,7 @@ function queryDB(req, res){
             
             var result = [];
             data.Items.forEach(function(Item) {
-                console.log(Item)
+                //console.log(Item)
                 
                 result.push({
                     "title": Item.title,
@@ -212,12 +210,13 @@ function queryDB(req, res){
             });
             //return res.status(200).json(results);
             console.log(result);
-            res.json(result);
+            res.json(result); //respond with array of movies
         }
     });
 
 }
 
+//function to wait a number of ms before executing next line
 function wait(ms){
     var start = new Date().getTime();
     var end = start;

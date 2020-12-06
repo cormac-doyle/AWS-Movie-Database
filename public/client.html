@@ -37,86 +37,19 @@
                     Rank
                 </th>
             </tr>
-            <tr>
+            <tr v-for="movie in movies" :key="movie.title">
                 <td>
-                    The ABCs of Death
+                    {{movie.title}}
                 </td>
                 <td>
-                    2012
+                    {{movie.year}}
                 </td>
                 <td>
-                    2012-09-15T00:00:00Z
+                    {{movie.release}}
                 </td>
                 <td>
-                    2274
+                    {{movie.rank}}
                 </td>
-            </tr>
-            <tr>
-                <td>
-                    The Act of Killing
-                </td>
-                <td>
-                    2012
-                </td>
-                <td>
-                    2012-08-31T00:00:00Z
-                </td>
-                <td>
-                    2022
-                </td>
-            </tr><tr>
-                <td>
-                    The Amazing Spider-Man
-                </td>
-                <td>
-                    2012
-                </td>
-                <td>
-                    2012-06-13T00:00:00Z
-                </td>
-                <td>
-                    235
-                </td>
-            </tr><tr>
-                <td>
-                    The Apparition
-                </td>
-                <td>
-                    2012
-                </td>
-                <td>
-                    2012-08-23T00:00:00Z
-                </td>
-                <td>
-                    1621
-                </td>
-            </tr><tr>
-                <td>
-                    The Attack
-                </td>
-                <td>
-                    2012
-                </td>
-                <td>
-                    2012-09-01T00:00:00Z
-                </td>
-                <td>
-                    4976
-                </td>
-            </tr><tr>
-                <td>
-                    The Avengers
-                </td>
-                <td>
-                    2012
-                </td>
-                <td>
-                    2012-04-11T00:00:00Z
-                </td>
-                <td>
-                    48
-                </td>
-            </tr>
         </table>
         <br/>
 

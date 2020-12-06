@@ -40,7 +40,7 @@ let s3 = new AWS.S3();
 
 
 
-async function CreateDestroyDB (req, res){
+function CreateDestroyDB (req, res){
     console.log("createDestroyDB called");
 
 
@@ -85,7 +85,7 @@ async function CreateDestroyDB (req, res){
         });
 
        
-        await sleep(5000); // wait 5 seconds so table can be created
+        //await sleep(5000); // wait 5 seconds so table can be created
         console.log("Table created.");
         console.log("Loading Data. Please Wait...");
 
@@ -229,8 +229,10 @@ function queryDB(req, res){
 
 }
 
+/*
 function sleep(ms) {
     return new Promise((resolve) => {
       setTimeout(resolve, ms);
     });
 }
+*/

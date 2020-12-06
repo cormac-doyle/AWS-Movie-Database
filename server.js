@@ -56,7 +56,7 @@ function CreateDestroyDB (req, res){
     //if bool true: create DB and load data
     //if bool fasle: delete DB
     if(create_bool == 'true'){
-
+        console.log("Creating Table..");
         var params = {
             TableName : "Movies",
             KeySchema: [       
@@ -141,7 +141,7 @@ function CreateDestroyDB (req, res){
     }
     else{
         
-      
+        console.log("Deleting Table..");
 
         var params = {
             TableName : "Movies"

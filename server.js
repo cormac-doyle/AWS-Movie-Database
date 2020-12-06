@@ -12,7 +12,7 @@ app.listen(port, () => console.log(`Listening on the port ${port}`))
 
 app.get('/movies/:movie_name/:movie_year', queryDB)
 app.get('/create/:create_bool',CreateDestroyDB)
-//app.get(destroyDB)
+
 
 app.get('/', (req, res) => {
     res.sendFile('public/client.html', {root: __dirname})
@@ -56,7 +56,7 @@ function CreateDestroyDB (req, res){
     //if bool true: create DB and load data
     //if bool fasle: delete DB
     if(create_bool == 'true'){
-        console.log("Creating Table..");
+        console.log("Creating Table. Please Wait...")
         var params = {
             TableName : "Movies",
             KeySchema: [       
@@ -80,7 +80,7 @@ function CreateDestroyDB (req, res){
                 console.error("Unable to create table. Error JSON:", JSON.stringify(err, null, 2));
             } else {
                 //console.log("Created table. Table description JSON:", JSON.stringify(data, null, 2));
-                console.log("Creating Table. Please Wait...")
+                
             }
         });
 
@@ -178,18 +178,6 @@ function queryDB(req, res){
     var table = "Movies";
 
 
-
-    if(!title || !year){
-        res.status(400).send('Please provide title AND year');
-    }
-
-    if(!dynamodb){
-        res.status(400).send('Unable to query as table does not exist');
-    }
-
-
-    
-
     var params = {
         TableName : "Movies",
         KeyConditionExpression: "#yr = :yyyy and begins_with(title, :t)",
@@ -210,15 +198,16 @@ function queryDB(req, res){
             return res.status(400).json(err);
         } else {
             console.log("Query succeeded.");
+            
             var result = [];
-            data.Items.forEach(function(item) {
-                //console.log(item)
+            data.Items.forEach(function(Item) {
+                console.log(Item)
                 
                 result.push({
-                    "title": item.title,
-                    "year": item.year,
-                    "rank": item.rank,
-                    "release": item.release
+                    "title": Item.title,
+                    "year": Item.year,
+                    "rank": Item.rank,
+                    "release": Item.release
                 })
             });
             //return res.status(200).json(results);

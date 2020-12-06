@@ -1,0 +1,113 @@
+<head>
+  
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+
+   
+    
+</head>
+<body>
+    <div id="app">
+        
+        <h1>Cormac Doyle : Assignment 2</h1>
+        
+        <button v-on:click="create_bool = true; CreateDestroyDB();">Create Database</button> <br><br>
+        
+       
+        Movie: <input v-model="movie_search"> Year: <input v-model="year_search"> 
+        <button v-on:click="queryDB()">Query Database</button><br><br>
+
+        <button v-on:click="create_bool = false; CreateDestroyDB();">Destroy Database</button> <br><br>
+        
+        
+
+        
+        
+        <table border=1>
+            <tr>
+                <th>
+                    Movie Name
+                </th>
+                <th>
+                    Movie year
+                </th>
+                <th>
+                    Release Date
+                </th>
+                <th>
+                    Rank
+                </th>
+            </tr>
+            <tr v-for="movie in movies" :key="movie.title">
+                <td>
+                    {{movie.title}}
+                </td>
+                <td>
+                    {{movie.year}}
+                </td>
+                <td>
+                    {{movie.release}}
+                </td>
+                <td>
+                    {{movie.rank}}
+                </td>
+        </table>
+        <br/>
+
+        
+
+    </div>
+
+  
+
+    <script>
+    // vue app
+    var app = new Vue({
+        el: '#app',
+        data: {
+           
+            movie_search: "",
+            year_search: "",
+            movies:{},
+            create_bool:false, //state of DB, create =true, destroy = false
+           
+        },
+        methods: {
+            queryDB: queryDB,
+            CreateDestroyDB: CreateDestroyDB
+        }
+    })
+
+    
+    
+    function queryDB(){
+        
+            console.log("queryDB called")
+            let prom = fetch("/movies/" + this.movie_search+"/"+ this.year_search);
+            prom.then(response => response.json())
+                .then(response =>
+                    this.movies = response, 
+                )
+    }
+
+    
+    function CreateDestroyDB(){
+
+        console.log("createDestroyDB called")
+            let prom = fetch("/create/" + this.create_bool);
+            prom.then(response => response.json())
+                .then(response =>
+                    this.databaseStatus = response,
+                )
+        
+    
+    }
+
+    </script>
+</body>
+
+
+<style>
+
+
+    
+</style>
